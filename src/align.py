@@ -16,8 +16,28 @@ def align(x: str, y: str, edits: str) -> tuple[str, str]:
     ('ACCACAGT-CATA', 'A-CAGAGTACAAA')
 
     """
-    return "", ""
+    x, y = iter(x), iter(y)
+    seq1, seq2 = list(), list()
+    for i, edit in enumerate(edits):
+        match edit:
+            case 'M':
+                seq1.append(next(x))
+                seq2.append(next(y))
+            case 'D':
+                seq1.append(next(x))
+                seq2.append('-')
+            case 'I':
+                seq1.append('-')
+                seq2.append(next(y))
+    return "".join(seq1), "".join(seq2)
 
+def get_edit_operation(x: str, y: str) -> str:
+    if x == '-':
+        return 'I'
+    elif y == '-':
+        return 'D'
+    else:
+        return 'M'
 
 def edits(x: str, y: str) -> str:
     """Extract the edit operations from a pairwise alignment.
@@ -33,4 +53,4 @@ def edits(x: str, y: str) -> str:
     'MDMMMMMMIMMMM'
 
     """
-    return ""
+    return "".join(get_edit_operation(values[0], values[1]) for values in zip(x, y))
