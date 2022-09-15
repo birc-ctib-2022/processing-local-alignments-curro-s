@@ -18,7 +18,7 @@ def align(x: str, y: str, edits: str) -> tuple[str, str]:
     """
     x, y = iter(x), iter(y)
     seq1, seq2 = list(), list()
-    for i, edit in enumerate(edits):
+    for edit in edits:
         match edit:
             case 'M':
                 seq1.append(next(x))
